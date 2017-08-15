@@ -31,15 +31,15 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">Destinations</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Destinations">Destinations</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">Trips</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">Blog</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Blog">Blog</a></li>
                 </ul>
                 @*@await Html.PartialAsync("_LoginPartial")*@
                 <ul class="nav navbar-nav navbar-right">
                     @if (User.Identity.IsAuthenticated)
                     {
+                        <li><a asp-controller="Account" asp-action="Profile">Hello @User.Identity.Name!</a></li>
                         <li><a asp-controller="Account" asp-action="Logout">Logout</a></li>
                     }
                     else

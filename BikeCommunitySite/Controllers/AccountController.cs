@@ -7,6 +7,9 @@ using Microsoft.Extensions.Logging;
 using BikeCommunitySite.Models;
 using BikeCommunitySite.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using BikeCommunitySite.Models.ViewModels;
+using System.Linq;
+using System.Security.Claims;
 
 namespace BikeCommunitySite.Controllers
 {
@@ -33,6 +36,17 @@ namespace BikeCommunitySite.Controllers
 
         [TempData]
         public string ErrorMessage { get; set; }
+
+        [Authorize]
+        public IActionResult Profile()
+        {
+            return View(new UserProfileViewModel()
+            {
+                Name = User.Identity.Name,
+                EmailAddress = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
+                ProfileImage = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value
+            });
+        }
 
         [HttpGet]
         [AllowAnonymous]
