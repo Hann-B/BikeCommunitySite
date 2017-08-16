@@ -14,9 +14,11 @@ namespace BikeSite.Services
     public class PlaceService:IPlaceService
     {
         readonly private SingleTracksAPI _singleTracksApi;
-        public PlaceService(IOptions<SingleTracksAPI> optionsAccessor)
+        readonly private GoogleApis _googleApis;
+        public PlaceService(IOptions<SingleTracksAPI> SingleTracksOptionsAccessor, IOptions<GoogleApis>googleOptionsAccessor)
         {
-            _singleTracksApi = optionsAccessor.Value;
+            _singleTracksApi = SingleTracksOptionsAccessor.Value;
+            _googleApis = googleOptionsAccessor.Value;
         }
 
         public async Task<IQueryable<PlaceModel.Place>> GetTopDestinations()
@@ -58,6 +60,25 @@ namespace BikeSite.Services
             }
             var selectedPlace = JsonConvert.DeserializeObject<PlaceModel.RootObject>(raw);
             return selectedPlace.places.FirstOrDefault();
-        } 
+        }
+
+        public async Task<AccomodationModel.RootObject> GetAccommodations()
+        {
+            var googleApis = _googleApis;
+            var Accommodations = string.Format(googleApis.PlacesApi, _googleApis.PlacesApiKey);
+
+            var request = (HttpWebRequest)WebRequest.Create(Accommodations);
+            request.Accept = "application/json";
+
+            WebResponse response = await request.GetResponseAsync();
+
+            var raw = String.Empty;
+            using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8, true, 1024, true))
+            {
+                raw = reader.ReadToEnd();
+            }
+            var ListOfAccommodations = JsonConvert.DeserializeObject<AccomodationModel.RootObject>(raw);
+            return ListOfAccommodations;
+        }
     }
 }

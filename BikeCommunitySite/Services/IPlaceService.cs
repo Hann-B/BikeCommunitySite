@@ -10,5 +10,6 @@ namespace BikeCommunitySite.Services
     {
         Task<IQueryable<PlaceModel.Place>> GetTopDestinations();
         Task<PlaceModel.Place> GetPlaceDetailsAsync(double lat, double lon, string city);
+        Task<AccomodationModel.RootObject> GetAccommodations();
     }
 }

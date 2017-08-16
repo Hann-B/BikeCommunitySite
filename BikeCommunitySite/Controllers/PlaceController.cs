@@ -29,5 +29,12 @@ namespace BikeCommunitySite.Controllers
             var SelectedPlace = await _placeService.GetPlaceDetailsAsync(lat, lon, city);
             return View(SelectedPlace);
         }
+
+        [HttpGet("Place/Accommodations")]
+        public async Task<ActionResult> Accommodations()
+        {
+            var ListofAccomodations = await _placeService.GetAccommodations();
+            return View(ListofAccomodations);
+        }
     }
 }
