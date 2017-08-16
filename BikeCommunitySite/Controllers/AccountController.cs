@@ -21,31 +21,46 @@ namespace BikeCommunitySite.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly IUserInfoService _userInfoService;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            IUserInfoService userInfoService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _userInfoService = userInfoService;
         }
 
         [TempData]
         public string ErrorMessage { get; set; }
 
         [Authorize]
-        public IActionResult Profile()
+        public async Task<IActionResult> Profile()
         {
-            return View(new UserProfileViewModel()
+            var accessToken = string.Empty;
+            if (User.Identity.IsAuthenticated)
             {
-                Name = User.Identity.Name,
-                EmailAddress = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
-                ProfileImage = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value
-            });
+                accessToken = await HttpContext.GetTokenAsync("access_token");
+            }
+            var userInfo = await _userInfoService.GetUserInfo(accessToken);
+
+            var user = new ApplicationUser()
+            {
+                Id = userInfo.user_id,
+                Name = userInfo.name,
+                Nickname = userInfo.nickname,
+                EmailAddress = userInfo.email,
+                Photo = userInfo.picture
+            };
+
+            return View(user);
+
         }
 
         [HttpGet]
@@ -66,6 +81,22 @@ namespace BikeCommunitySite.Controllers
                 RedirectUri = Url.Action("Index", "Home")
             });
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        }
+
+        [Authorize]
+        public IActionResult Claims()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult EditUserInfo(ApplicationUser applicationUser)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                applicationUser.Id = User.Claims.FirstOrDefault(f => f.Type == "user_id")?.Value;
+            }
+            return View(applicationUser);
         }
 
         //[HttpGet]

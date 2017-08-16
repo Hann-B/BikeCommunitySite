@@ -9,6 +9,7 @@ namespace BikeCommunitySite.Extentions
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
             services.AddTransient<IPlaceService, PlaceService>();
+            services.AddTransient<IUserInfoService, UserInfoService>();
 
             return services;
         }

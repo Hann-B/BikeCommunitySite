@@ -81,6 +81,9 @@ namespace BikeCommunitySite
                 // Configure the Claims Issuer to be Auth0
                 options.ClaimsIssuer = "Auth0";
 
+                // Saves tokens to the AuthenticationProperties
+                options.SaveTokens = true;
+
                 options.Events = new OpenIdConnectEvents
                 {
                     // handle the logout redirection 
