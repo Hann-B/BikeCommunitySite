@@ -22,8 +22,8 @@ namespace BikeCommunitySite.Controllers
             return View();
         }
 
-        // GET: Places/Details/5
-        public async Task<ActionResult> Details(double lat, double lon, string city)
+        [HttpGet("Place/Destination")]
+        public async Task<ActionResult> DestinationDetails(double lat, double lon, string city)
         {
             var SelectedPlace = await _placeService.GetPlaceDetailsAsync(lat, lon, city);
             return View(SelectedPlace);
@@ -41,6 +41,13 @@ namespace BikeCommunitySite.Controllers
         {
             var ListofRentalStores = await _placeService.GetRentalStores();
             return View(ListofRentalStores);
+        }
+
+        [HttpGet("Place/Details")]
+        public async Task<ActionResult> PlaceDetails(string placeId)
+        {
+            var rv = await _placeService.GetGooglePlaceDetails(placeId);
+            return View(rv);
         }
     }
 }

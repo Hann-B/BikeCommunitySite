@@ -21,7 +21,7 @@
                     <div class="col-md-6">
                         <p>Description:</p>
                         <p>@place.description</p>
-                        <p><a href="@Url.Action("Details","Places", new PlaceModel.Place{lat=place.lat, lon=place.lon, city=place.city})" class="btn btn-primary" role="button">Details</a></p>
+                        <p><a href="@Url.Action("DestinationDetails","Place", new DestinationModel.Place{lat=place.lat, lon=place.lon, city=place.city})" class="btn btn-primary" role="button">Details</a></p>
                     </div>
                     <div class="clearfix"></div>
                 </div>

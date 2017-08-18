@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace BikeSite.Services
 {
-    public class PlaceService:IPlaceService
+    public class PlaceService : IPlaceService
     {
         readonly private SingleTracksAPI _singleTracksApi;
         readonly private GoogleApis _googleApis;
-        public PlaceService(IOptions<SingleTracksAPI> SingleTracksOptionsAccessor, IOptions<GoogleApis>googleOptionsAccessor)
+        public PlaceService(IOptions<SingleTracksAPI> SingleTracksOptionsAccessor, IOptions<GoogleApis> googleOptionsAccessor)
         {
             _singleTracksApi = SingleTracksOptionsAccessor.Value;
             _googleApis = googleOptionsAccessor.Value;
@@ -86,9 +86,9 @@ namespace BikeSite.Services
         {
             var googleApis = _googleApis;
             var type = "bicycle_store";
-            var Accommodations = string.Format(googleApis.PlacesApi, type, _googleApis.PlacesApiKey);
+            var RentalStores = string.Format(googleApis.PlacesApi, type, _googleApis.PlacesApiKey);
 
-            var request = (HttpWebRequest)WebRequest.Create(Accommodations);
+            var request = (HttpWebRequest)WebRequest.Create(RentalStores);
             request.Accept = "application/json";
 
             WebResponse response = await request.GetResponseAsync();
@@ -98,8 +98,29 @@ namespace BikeSite.Services
             {
                 raw = reader.ReadToEnd();
             }
-            var ListOfAccommodations = JsonConvert.DeserializeObject<GooglePlaceModel.RootObject>(raw);
-            return ListOfAccommodations;
+            var ListOfRentalStores = JsonConvert.DeserializeObject<GooglePlaceModel.RootObject>(raw);
+            return ListOfRentalStores;
+        }
+
+        public async Task<GooglePlaceModel.Result> GetGooglePlaceDetails(string placeId)
+        {
+            var googleApis = _googleApis;
+
+            var PlaceDetails = string.Format(googleApis.PlaceDetails, placeId, googleApis.PlacesApiKey);
+
+            var request = (HttpWebRequest)WebRequest.Create(PlaceDetails);
+            request.Accept = "application/json";
+
+            WebResponse response = await request.GetResponseAsync();
+
+            var raw = String.Empty;
+            using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8, true, 1024, true))
+            {
+                raw = reader.ReadToEnd();
+            }
+            var result = JsonConvert.DeserializeObject<GooglePlaceModel.Result>(raw);
+            return result;
+
         }
     }
 }
