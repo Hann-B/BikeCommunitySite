@@ -21,7 +21,7 @@ namespace BikeSite.Services
             _googleApis = googleOptionsAccessor.Value;
         }
 
-        public async Task<IQueryable<PlaceModel.Place>> GetTopDestinations()
+        public async Task<IQueryable<DestinationModel.Place>> GetTopDestinations()
         {
             var singleTracksApi = _singleTracksApi;
 
@@ -36,13 +36,13 @@ namespace BikeSite.Services
             {
                 raw = reader.ReadToEnd();
             }
-            var allresults = JsonConvert.DeserializeObject<PlaceModel.RootObject>(raw);
+            var allresults = JsonConvert.DeserializeObject<DestinationModel.RootObject>(raw);
             //var filteredResults = allresults.places.RemoveAll(r => r.description.ToString() == string.Empty);
             return allresults.places.AsQueryable();
 
         }
 
-        public async Task<PlaceModel.Place> GetPlaceDetailsAsync(double lat, double lon, string city)
+        public async Task<DestinationModel.Place> GetPlaceDetailsAsync(double lat, double lon, string city)
         {
             var singleTracksApi = _singleTracksApi;
             var DetailStr = string.Format(singleTracksApi.PlaceDetails, lat, lon, city);
@@ -58,14 +58,15 @@ namespace BikeSite.Services
             {
                 raw = reader.ReadToEnd();
             }
-            var selectedPlace = JsonConvert.DeserializeObject<PlaceModel.RootObject>(raw);
+            var selectedPlace = JsonConvert.DeserializeObject<DestinationModel.RootObject>(raw);
             return selectedPlace.places.FirstOrDefault();
         }
 
-        public async Task<AccomodationModel.RootObject> GetAccommodations()
+        public async Task<GooglePlaceModel.RootObject> GetAccommodations()
         {
             var googleApis = _googleApis;
-            var Accommodations = string.Format(googleApis.PlacesApi, _googleApis.PlacesApiKey);
+            var type = "lodging";
+            var Accommodations = string.Format(googleApis.PlacesApi, type, _googleApis.PlacesApiKey);
 
             var request = (HttpWebRequest)WebRequest.Create(Accommodations);
             request.Accept = "application/json";
@@ -77,7 +78,27 @@ namespace BikeSite.Services
             {
                 raw = reader.ReadToEnd();
             }
-            var ListOfAccommodations = JsonConvert.DeserializeObject<AccomodationModel.RootObject>(raw);
+            var ListOfAccommodations = JsonConvert.DeserializeObject<GooglePlaceModel.RootObject>(raw);
+            return ListOfAccommodations;
+        }
+
+        public async Task<GooglePlaceModel.RootObject> GetRentalStores()
+        {
+            var googleApis = _googleApis;
+            var type = "bicycle_store";
+            var Accommodations = string.Format(googleApis.PlacesApi, type, _googleApis.PlacesApiKey);
+
+            var request = (HttpWebRequest)WebRequest.Create(Accommodations);
+            request.Accept = "application/json";
+
+            WebResponse response = await request.GetResponseAsync();
+
+            var raw = String.Empty;
+            using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8, true, 1024, true))
+            {
+                raw = reader.ReadToEnd();
+            }
+            var ListOfAccommodations = JsonConvert.DeserializeObject<GooglePlaceModel.RootObject>(raw);
             return ListOfAccommodations;
         }
     }

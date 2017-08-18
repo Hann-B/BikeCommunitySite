@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BikeCommunitySite.Models
 {
-    public class AccomodationModel
+    public class GooglePlaceModel
     {
         public class Location
         {

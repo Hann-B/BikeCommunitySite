@@ -14,19 +14,19 @@
                 <div class="col-md-6">
                     <p>@item.vicinity</p>
                     @*@if (item.photos.Select(s => s.html_attributions).Count()!=0)
-                    {
-                        @foreach (var photo in item.photos.Select(s=>s.html_attributions).FirstOrDefault())
                         {
-                            <img class="img-responsive img-border-left"
-                             src="@photo" alt="">
+                            @foreach (var photo in item.photos.Select(s=>s.html_attributions).FirstOrDefault())
+                            {
+                                <img class="img-responsive img-border-left"
+                                 src="@photo" alt="">
 
-                        }
-                    }*@
+                            }
+                        }*@
                 </div>
                 <div class="col-md-6">
                     @foreach (var type in item.types)
                     {
-                        <p>@type</p>               
+                        <p>@type</p>
                     }
                 </div>
                 <div class="clearfix"></div>

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BikeCommunitySite.Models
 {
-    public class PlaceModel
+    public class DestinationModel
     {
         public class Attribs
         {

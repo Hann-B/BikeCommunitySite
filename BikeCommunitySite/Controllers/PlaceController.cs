@@ -16,7 +16,6 @@ namespace BikeCommunitySite.Controllers
             _placeService = placeService;
         }
 
-
         // GET: Places
         public ActionResult PlacesIndex()
         {
@@ -35,6 +34,13 @@ namespace BikeCommunitySite.Controllers
         {
             var ListofAccomodations = await _placeService.GetAccommodations();
             return View(ListofAccomodations);
+        }
+
+        [HttpGet("Place/RentalStores")]
+        public async Task<ActionResult> RentalStores()
+        {
+            var ListofRentalStores = await _placeService.GetRentalStores();
+            return View(ListofRentalStores);
         }
     }
 }

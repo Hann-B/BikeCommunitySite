@@ -8,6 +8,7 @@ namespace BikeCommunitySite.Models
     public class GoogleApis
     {
         public String PlacesApi { get; set; }
+        public String PlaceDetails { get; set; }
         public String PlacesApiKey { get; set; }
     }
 }
