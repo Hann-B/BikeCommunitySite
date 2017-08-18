@@ -102,7 +102,7 @@ namespace BikeSite.Services
             return ListOfRentalStores;
         }
 
-        public async Task<GooglePlaceModel.Result> GetGooglePlaceDetails(string placeId)
+        public async Task<GooglePlaceDetailModel.Result> GetGooglePlaceDetails(string placeId)
         {
             var googleApis = _googleApis;
 
@@ -118,8 +118,8 @@ namespace BikeSite.Services
             {
                 raw = reader.ReadToEnd();
             }
-            var result = JsonConvert.DeserializeObject<GooglePlaceModel.Result>(raw);
-            return result;
+            var rv = JsonConvert.DeserializeObject<GooglePlaceDetailModel.RootObject>(raw);
+            return rv.result;
 
         }
     }

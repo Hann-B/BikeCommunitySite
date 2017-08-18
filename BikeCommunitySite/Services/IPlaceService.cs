@@ -12,6 +12,6 @@ namespace BikeCommunitySite.Services
         Task<DestinationModel.Place> GetPlaceDetailsAsync(double lat, double lon, string city);
         Task<GooglePlaceModel.RootObject> GetAccommodations();
         Task<GooglePlaceModel.RootObject> GetRentalStores();
-        Task<GooglePlaceModel.Result> GetGooglePlaceDetails(string placeId);
+        Task<GooglePlaceDetailModel.Result> GetGooglePlaceDetails(string placeId);
     }
 }

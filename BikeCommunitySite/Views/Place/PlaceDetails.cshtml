@@ -1,4 +1,4 @@
-﻿@model BikeCommunitySite.Models.GooglePlaceModel.Result
+﻿@model BikeCommunitySite.Models.GooglePlaceDetailModel.Result
 
 <div class="row">
     <div class="box">
@@ -6,12 +6,15 @@
             <hr>
             <h2 class="intro-text text-center">
                 @Model.name
+                <strong>@Model.rating</strong>
             </h2>
             <hr>
             @*<img class="img-responsive img-border img-left" src="" alt="">*@
             <hr class="visible-xs">
-            <p>Description:</p>
-            <p>@Model.vicinity</p>
+            <p>Address:</p>
+            <p>@Model.adr_address</p>
+            <p>Website:</p>
+            <p>@Model.website</p>
         </div>
         <div>
             @*<a href="@Url.Action("Destinations", "Home")" class="btn btn-primary" role="button">Back to List</a>*@
