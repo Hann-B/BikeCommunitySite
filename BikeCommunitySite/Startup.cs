@@ -16,6 +16,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using BikeCommunitySite.Extentions;
+using Sakura.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace BikeCommunitySite
 {
@@ -31,6 +33,12 @@ namespace BikeCommunitySite
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddBootstrapPagerGenerator(options =>
+            {
+                options.ConfigureDefault();
+            });
+            services.Configure<PagerOptions>(Configuration.GetSection("Pager"));
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -115,6 +123,8 @@ namespace BikeCommunitySite
             services.RegisterServices();
 
             services.AddMvc();
+
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
             //Add functionality to inject IOptions<T>
             services.AddOptions();

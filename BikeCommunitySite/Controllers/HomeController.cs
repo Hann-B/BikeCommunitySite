@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BikeCommunitySite.Models;
 using BikeCommunitySite.Services;
+using Sakura.AspNetCore;
 
 namespace BikeCommunitySite.Controllers
 {
@@ -20,10 +21,17 @@ namespace BikeCommunitySite.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Destinations(int page = 1)
+        public async Task<IActionResult> Destinations(int? page, int? pageSize)
         {
+            int no = page ?? 1;
+            int size = pageSize ?? 5;
             var listOfPlaces = await _placeService.GetTopDestinations();
-            return View(listOfPlaces.OrderBy(o => o.description).Reverse());
+            IPagedList<DestinationModel.Place> lst = null;
+            lst = listOfPlaces
+                .OrderBy(o => o.description)
+                .Reverse()
+                .ToPagedList<DestinationModel.Place>(size, no);
+            return View(lst);
         }
 
         public IActionResult About()

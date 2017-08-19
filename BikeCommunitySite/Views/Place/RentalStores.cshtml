@@ -1,4 +1,4 @@
-﻿@model BikeCommunitySite.Models.GooglePlaceModel.RootObject
+﻿@model Sakura.AspNetCore.IPagedList<BikeCommunitySite.Models.GooglePlaceModel.Result>
 
 <html lang="en">
 <head>
@@ -36,14 +36,14 @@
     </div>
 
     <!-- list of nearby accommodations -->
-    @await Html.PartialAsync("_ListOfNearbyRentalStores", Model.results);
+    @await Html.PartialAsync("_ListOfNearbyRentalStores", Model);
 
     <!-- /.container -->
     <footer>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <p>Copyright &copy; Bike Community 2017</p>
+                    <pager class="center-block" />
                 </div>
             </div>
         </div>

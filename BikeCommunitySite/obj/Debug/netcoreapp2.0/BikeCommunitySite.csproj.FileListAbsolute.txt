@@ -7,6 +7,6 @@ c:\users\hanna\documents\visual studio 2017\Projects\BikeCommunitySite\BikeCommu
 c:\users\hanna\documents\visual studio 2017\Projects\BikeCommunitySite\BikeCommunitySite\obj\Debug\netcoreapp2.0\BikeCommunitySite.AssemblyInfoInputs.cache
 c:\users\hanna\documents\visual studio 2017\Projects\BikeCommunitySite\BikeCommunitySite\obj\Debug\netcoreapp2.0\BikeCommunitySite.AssemblyInfo.cs
 c:\users\hanna\documents\visual studio 2017\Projects\BikeCommunitySite\BikeCommunitySite\bin\Debug\netcoreapp2.0\BikeCommunitySite.pdb
-c:\users\hanna\documents\visual studio 2017\Projects\BikeCommunitySite\BikeCommunitySite\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
 c:\users\hanna\documents\visual studio 2017\Projects\BikeCommunitySite\BikeCommunitySite\obj\Debug\netcoreapp2.0\BikeCommunitySite.dll
 c:\users\hanna\documents\visual studio 2017\Projects\BikeCommunitySite\BikeCommunitySite\obj\Debug\netcoreapp2.0\BikeCommunitySite.pdb
+C:\Users\Hanna\Documents\Visual Studio 2017\Projects\BikeCommunitySite\BikeCommunitySite\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs

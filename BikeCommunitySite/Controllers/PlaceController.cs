@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BikeSite.Services;
 using BikeCommunitySite.Services;
+using Sakura.AspNetCore;
+using BikeCommunitySite.Models;
 
 namespace BikeCommunitySite.Controllers
 {
@@ -30,17 +32,27 @@ namespace BikeCommunitySite.Controllers
         }
 
         [HttpGet("Place/Accommodations")]
-        public async Task<ActionResult> Accommodations()
+        public async Task<ActionResult> Accommodations(int? page, int? pageSize)
         {
+            int no = page ?? 1;
+            int size = pageSize ?? 5;
             var ListofAccomodations = await _placeService.GetAccommodations();
-            return View(ListofAccomodations);
+            IPagedList<GooglePlaceModel.Result> lst = null;
+            lst = ListofAccomodations.results             
+                .ToPagedList<GooglePlaceModel.Result>(size, no);
+            return View(lst);
         }
 
         [HttpGet("Place/RentalStores")]
-        public async Task<ActionResult> RentalStores()
+        public async Task<ActionResult> RentalStores(int? page, int? pageSize)
         {
+            int no = page ?? 1;
+            int size = pageSize ?? 5;
             var ListofRentalStores = await _placeService.GetRentalStores();
-            return View(ListofRentalStores);
+            IPagedList<GooglePlaceModel.Result> lst = null;
+            lst = ListofRentalStores.results
+                .ToPagedList<GooglePlaceModel.Result>(size, no);
+            return View(lst);
         }
 
         [HttpGet("Place/Details")]
