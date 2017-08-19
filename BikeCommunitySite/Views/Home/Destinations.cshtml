@@ -1,5 +1,6 @@
 ﻿@model Sakura.AspNetCore.IPagedList<BikeCommunitySite.Models.DestinationModel.Place>
 
+
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -33,9 +34,10 @@
                 <div class="clearfix"></div>
             </div>
         </div>
-
+        @*@await Html.PartialAsync("_MapDestinations", Model);*@
         <!-- list of top destinations -->
         @await Html.PartialAsync("_ListOfTopDestinations", Model);
+        
     </div>
 
     <!-- /.container -->
@@ -43,7 +45,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <pager class="center-block"/>
+                    <pager class="center-block" />
                     <p>Copyright &copy; Bike Community 2017</p>
                 </div>
             </div>
@@ -52,4 +54,3 @@
 
 </body>
 </html>
-

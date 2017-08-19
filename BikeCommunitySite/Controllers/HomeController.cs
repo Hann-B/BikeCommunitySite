@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using BikeCommunitySite.Models;
 using BikeCommunitySite.Services;
 using Sakura.AspNetCore;
+using BikeCommunitySite.Models.ViewModels;
 
 namespace BikeCommunitySite.Controllers
 {
@@ -31,6 +32,7 @@ namespace BikeCommunitySite.Controllers
                 .OrderBy(o => o.description)
                 .Reverse()
                 .ToPagedList<DestinationModel.Place>(size, no);
+
             return View(lst);
         }
 
