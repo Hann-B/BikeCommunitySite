@@ -3,6 +3,8 @@ using BikeCommunitySite.Services;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -40,6 +42,24 @@ namespace BikeSite.Services
             //var filteredResults = allresults.places.RemoveAll(r => r.description.ToString() == string.Empty);
             return allresults.places.AsQueryable();
 
+        }
+
+        public async Task<string> GetCsvFormat()
+        {
+            var singleTracksApi = _singleTracksApi;
+
+            var request = (HttpWebRequest)WebRequest.Create(singleTracksApi.AllUsaPlaces.ToString());
+            request.Accept = "application/json";
+            request.Headers["X-Mashape-Key"] = singleTracksApi.X_Mashape_Key.ToString();
+
+            WebResponse response = await request.GetResponseAsync();
+
+            var raw = String.Empty;
+            using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8, true, 1024, true))
+            {
+                raw = reader.ReadToEnd();
+            }
+            return raw;
         }
 
         public async Task<DestinationModel.Place> GetPlaceDetailsAsync(double lat, double lon, string city)

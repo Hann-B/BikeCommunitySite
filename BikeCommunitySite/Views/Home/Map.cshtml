@@ -8,7 +8,7 @@
         html, body, #viewDiv {
             padding: 0;
             margin: 0;
-            height: 600px;
+            height: 400px;
             width: 100%;
         }
     </style>
@@ -18,12 +18,13 @@
 
     <script>
         require([
+            "esri/widgets/LayerList",
             "esri/widgets/Track",
             "esri/views/MapView",
             "esri/WebMap",
             "esri/widgets/Search",
             "dojo/domReady!"
-        ], function (Track, MapView, WebMap, Search) {
+        ], function (LayerList, Track, MapView, WebMap, Search) {
 
             var webmap = new WebMap({
                 portalItem: {
@@ -45,7 +46,10 @@
             view.ui.add(track, "top-left");
             view.then(function () {
                 track.start();
-
+                var layerList = new LayerList({
+                    view: view
+                });
+                view.ui.add(layerList, "top-right");
             }, function (error) {
                 console.log("The view's resources failed to load: ", error);
             });

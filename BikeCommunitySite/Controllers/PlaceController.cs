@@ -7,6 +7,10 @@ using BikeSite.Services;
 using BikeCommunitySite.Services;
 using Sakura.AspNetCore;
 using BikeCommunitySite.Models;
+using System.Net.Http;
+using System.Net;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
 
 namespace BikeCommunitySite.Controllers
 {
@@ -60,6 +64,21 @@ namespace BikeCommunitySite.Controllers
         {
             var rv = await _placeService.GetGooglePlaceDetails(placeId);
             return View(rv);
+        }
+
+        [HttpGet("Place/destinations.csv")]
+        public async Task<ActionResult> CsvDestination()
+        {
+            var content = await _placeService.GetCsvFormat();
+
+            string csv = TypeConversions.jsonToCSV(content, ",");
+
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+            result.Content = new StringContent(csv);
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("text/csv");
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = "destinations.csv" };
+
+            return View(result);
         }
     }
 }
