@@ -1,72 +1,73 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html>
 <head>
-    <title>Place searches</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
+    <title>Map</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.4/esri/css/main.css">
+    <script src="https://js.arcgis.com/4.4/"></script>
+
     <style>
-        #map {
-            width: 100%;
-            height: 400px;
-            background-color: grey;
-        }
     </style>
 
     <script>
-        var map;
-        var infowindow;
+        require([
+            "esri/tasks/Locator",
+            "esri/Map",
+            "esri/views/MapView",
+            "dojo/domReady!"
+        ], function (Locator, Map, MapView) {
+            // Create a locator task using the world geocoding service
+            var locatorTask = new Locator({
+                url: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
+            });
 
-        function initMap() {
+            // Create the Map
+            var map = new Map({
+                basemap: "terrain"
+            });
 
-            //var bikeLayer = new google.maps.BicyclingLayer();
-            //bikeLayer.setMap(map);
-
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    var pos = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    };
-                    map = new google.maps.Map(document.getElementById('map'), {
-                        center: pos,
-                        zoom: 15
-                    });
-
-                    infowindow = new google.maps.infowindow();
-                    var service = new google.maps.places.PlacesService(map);
-                    service.nearbySearch({
-                        location: pos,
-                        radius: 500,
-                        type: ['bicycle_store']
-                    }, callback);
-                });
-            }
-
-        }
-
-        function callback(results, status) {
-            if (status === google.maps.places.PlacesServiceStatus.OK) {
-                for (var i = 0; i < results.length; i++) {
-                    createMarker(results[i]);
-                }
-            }
-        }
-
-        function createMarker(place) {
-            var placeLoc = place.geometry.location;
-            var marker = new google.maps.Marker({
+            // Create the MapView
+            var view = new MapView({
+                container: "viewDiv",
                 map: map,
-                position: place.geometry.location
+                center: [-116.3031, 43.6088],
+                zoom: 12
             });
 
-            google.maps.event.addListener(marker, 'click', function () {
-                infowindow.setContent(place.name);
-                infowindow.open(map, this);
+
+            view.on("click", function (event) {
+                event.stopPropagation();
+
+                // Get the coordinates of the click on the view
+                // around the decimals to 3 decimals
+                var lat = Math.round(event.mapPoint.latitude * 1000) / 1000;
+                var lon = Math.round(event.mapPoint.longitude * 1000) / 1000;
+
+                view.popup.open({
+                    // Set the popup's title to the coordinates of the clicked location
+                    title: "Reverse geocode: [" + lon + ", " + lat + "]",
+                    location: event.mapPoint // Set the location of the popup to the clicked location
+                });
             });
-        }
+
+            // Execute a reverse geocode using the clicked location
+            locatorTask.locationToAddress(event.mapPoint).then(function (response) {
+                // If an address is successfully found, show it in the popup's content
+                view.popup.content = response.address;
+            }).otherwise(function (err) {
+                // If the promise fails and no result is found, show a generic message
+                view.popup.content = "No address was found for this location";
+            });
+        });
     </script>
 </head>
 <body>
-    <div id="map"></div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_MMH76EOUzNiuKtQFGxzHY1OCqUZyZdg&libraries=places&callback=initMap" async defer></script>
+    <input type="text" disabled="disabled" id="url" size="100" />
+    <input id="submitRequest" type="button" value="GO" />
+    <span id="status"></span>
+    </p>
+    <h2>Content</h2>
+    <textarea id="content"></textarea>
 </body>
 </html>

@@ -6,6 +6,9 @@ using BikeCommunitySite.Models;
 using BikeCommunitySite.Services;
 using Sakura.AspNetCore;
 using BikeCommunitySite.Models.ViewModels;
+using System.Net.Http;
+using System.Net;
+using System.Net.Http.Headers;
 
 namespace BikeCommunitySite.Controllers
 {
@@ -34,6 +37,18 @@ namespace BikeCommunitySite.Controllers
                 .ToPagedList<DestinationModel.Place>(size, no);
 
             return View(lst);
+        }
+
+        public IActionResult Map()
+        {
+            //var content = _placeService.GetTopDestinations().Result.ToString();
+            //string csv = JsonToCsvConversion.jsonToCSV(content, ",");
+
+            //HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+            //result.Content = new StringContent(csv);
+            //result.Content.Headers.ContentType = new MediaTypeHeaderValue("text/csv");
+            //result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = "export.csv" };
+            return View();
         }
 
         public IActionResult About()

@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Map</title>
+    <style>
+        html, body, #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 600px;
+            width: 100%;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.4/esri/css/main.css">
+    <script src="https://js.arcgis.com/4.4/"></script>
+
+    <script>
+        require([
+            "esri/widgets/Track",
+            "esri/views/MapView",
+            "esri/WebMap",
+            "esri/widgets/Search",
+            "dojo/domReady!"
+        ], function (Track, MapView, WebMap, Search) {
+
+            var webmap = new WebMap({
+                portalItem: {
+                    id: "6a334f26931540c88b60e62923d4b840"
+                }
+            });
+            var view = new MapView({
+                map: webmap,
+                container: "viewDiv"
+            });
+            var search = new Search({
+                view: view
+            });
+            search.defaultSource.withinViewEnabled = true; // Limit search to visible map area only
+            view.ui.add(search, "top-right"); // Add to the view
+            var track = new Track({
+                view: view
+            });
+            view.ui.add(track, "top-left");
+            view.then(function () {
+                track.start();
+
+            }, function (error) {
+                console.log("The view's resources failed to load: ", error);
+            });
+        });
+    </script>
+</head>
+<body>
+    <hr />
+    <div id="viewDiv"></div>
+</body>
+</html>
