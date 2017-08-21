@@ -66,7 +66,7 @@ namespace BikeCommunitySite.Controllers
             return View(rv);
         }
 
-        [HttpGet("Place/destinations.csv")]
+        [HttpPost("Place/destinations.csv")]
         public async Task<ActionResult> CsvDestination()
         {
             var content = await _placeService.GetCsvFormat();
