@@ -25,6 +25,11 @@ namespace BikeCommunitySite.Controllers
             return View();
         }
 
+        public IActionResult Trips()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> Destinations(int? page, int? pageSize)
         {
             int no = page ?? 1;
