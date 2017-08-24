@@ -25,9 +25,21 @@ namespace BikeCommunitySite.Controllers
             return View();
         }
 
-        public IActionResult Trips()
+        public async Task<IActionResult> Trips(int? page, int? pageSize)
         {
-            return View();
+            int no = page ?? 1;
+            int size = pageSize ?? 5;
+            var listOfPlaces = await _placeService.GetTopDestinations();
+            IPagedList<DestinationModel.Place> lst = null;
+            lst = listOfPlaces
+                .OrderBy(o => o.description)
+                .Reverse()
+                .ToPagedList<DestinationModel.Place>(size, no);
+            var rv = new PlanATripViewModel
+            {
+                Destination = lst
+            };
+            return View(rv);
         }
 
         public async Task<IActionResult> Destinations(int? page, int? pageSize)

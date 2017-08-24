@@ -1,0 +1,25 @@
+﻿@using BikeCommunitySite.Models;
+@model Sakura.AspNetCore.IPagedList<BikeCommunitySite.Models.DestinationModel.Place>
+
+@if (Model != null && Model.TotalPage > 0)
+{
+    <p>Search by City</p>
+    <p>Search by State</p>
+    @foreach (var place in Model)
+    {
+        @foreach (var act in place.activities)
+        {
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" aria-label="...">
+                        </span>
+                        <p>@place.name: @place.city, @place.state</p>
+                    </div>
+                </div>
+            </div>
+
+        }
+    }
+}
