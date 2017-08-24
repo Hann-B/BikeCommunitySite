@@ -28,12 +28,11 @@ namespace BikeCommunitySite.Controllers
         public async Task<IActionResult> Trips(int? page, int? pageSize)
         {
             int no = page ?? 1;
-            int size = pageSize ?? 5;
+            int size = pageSize ?? 100;
             var listOfPlaces = await _placeService.GetTopDestinations();
             IPagedList<DestinationModel.Place> lst = null;
             lst = listOfPlaces
-                .OrderBy(o => o.description)
-                .Reverse()
+                .OrderBy(o => o.state)
                 .ToPagedList<DestinationModel.Place>(size, no);
             var rv = new PlanATripViewModel
             {

@@ -1,25 +1,80 @@
 ﻿@using BikeCommunitySite.Models;
 @model Sakura.AspNetCore.IPagedList<BikeCommunitySite.Models.DestinationModel.Place>
 
+<script>
+    function myFunctionCity() {
+        // Declare variables
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("myInputCity");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[2];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+    function myFunctionState() {
+        // Declare variables
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("myInputState");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[3];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+
 @if (Model != null && Model.TotalPage > 0)
 {
-    <p>Search by City</p>
-    <p>Search by State</p>
+            <div class="row">
+                <input type="text" id="myInputCity" onkeyup="myFunctionCity()" placeholder="Search by City">
+                <input type="text" id="myInputState" onkeyup="myFunctionState()" placeholder="Search by State">
+
+                <div class="col-lg-6">
+                    <table id="myTable">
+                        <tr class="header">
+                            <th style="width:10%"></th>
+                            <th style="width:50%;">Name</th>
+                            <th style="width:20%;">City</th>
+                            <th style="width:20%;">State</th>
+                        </tr>
     @foreach (var place in Model)
     {
         @foreach (var act in place.activities)
         {
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <input type="checkbox" aria-label="...">
-                        </span>
-                        <p>@place.name: @place.city, @place.state</p>
-                    </div>
-                </div>
-            </div>
-
+                        <tr>
+                            <td>
+                                <span class="input-group-addon">
+                                    <input type="checkbox" aria-label="...">
+                                </span>
+                            </td>
+                            <td>@place.name</td>
+                            <td>@place.city</td>
+                            <td>@place.state</td>
+                        </tr>
         }
     }
+                    </table>
+                </div>
+            </div>
 }
