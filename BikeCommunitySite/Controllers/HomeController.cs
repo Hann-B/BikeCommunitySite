@@ -25,18 +25,33 @@ namespace BikeCommunitySite.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Trips(int? page, int? pageSize)
+        public async Task<IActionResult> Trips()
         {
-            int no = page ?? 1;
-            int size = pageSize ?? 100;
-            var listOfPlaces = await _placeService.GetTopDestinations();
-            IPagedList<DestinationModel.Place> lst = null;
-            lst = listOfPlaces
+            //Destinations
+            var listOfDestinations = await _placeService.GetTopDestinations();
+            IQueryable<DestinationModel.Place> desintations = null;
+            desintations = listOfDestinations
                 .OrderBy(o => o.state)
-                .ToPagedList<DestinationModel.Place>(size, no);
+                .AsQueryable();
+
+            //Accommodations
+            var listofAccommodations = await _placeService.GetAccommodations();
+            IQueryable<GooglePlaceModel.Result> accommodations = null;
+            accommodations = listofAccommodations.results
+                .OrderBy(a=>a.name)
+                .AsQueryable();
+
+            //Bike Shops
+            var listofShops = await _placeService.GetRentalStores();
+            IQueryable<GooglePlaceModel.Result> bikeShops = null;
+            bikeShops = listofShops.results
+                .AsQueryable();
+               
             var rv = new PlanATripViewModel
             {
-                Destination = lst
+                Destination = desintations,
+                Accomadation = accommodations,
+                BikeShops = bikeShops
             };
             return View(rv);
         }

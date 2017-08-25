@@ -1,0 +1,56 @@
+﻿@using BikeCommunitySite.Models;
+@model IQueryable<BikeCommunitySite.Models.GooglePlaceModel.Result>
+
+<script>
+    function myFunctionCity() {
+        // Declare variables
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("myInputName");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+</script>
+
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="row">
+        <input type="text" id="myInputName" onkeyup="myFunctionName()" placeholder="Search by Name">
+
+        <div class="col-lg-6">
+            <table id="myTable">
+                <tr class="header">
+                    <th style="width:10%"></th>
+                    <th style="width:50%;">Name</th>
+                    <th style="width:40%;">Address</th>
+                </tr>
+                @foreach (var place in Model)
+                {
+                    <tr>
+                        <td>
+                            <span class="input-group-addon">
+                                <input type="checkbox" aria-label="...">
+                            </span>
+                        </td>
+                        <td>@place.name</td>
+                        <td>@place.vicinity</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+}
+

@@ -51,6 +51,9 @@
     width: 100%; /* Full-width */
     border: 1px solid #ddd; /* Add a grey border */
     font-size: 18px; /* Increase font-size */
+    height: 400px;
+    overflow-y: scroll;
+    display: block;
 }
 
     #myTable th, #myTable td {
@@ -67,3 +70,7 @@
             /* Add a grey background color to the table header and on hover */
             background-color: #f1f1f1;
         }
+
+/*scrollable table*/
+
+

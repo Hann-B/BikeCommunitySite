@@ -8,8 +8,8 @@ namespace BikeCommunitySite.Models.ViewModels
 {
     public class PlanATripViewModel
     {
-        public IPagedList<DestinationModel.Place> Destination { get; set; }
+        public IQueryable<DestinationModel.Place> Destination { get; set; }
         public IQueryable<GooglePlaceModel.Result> Accomadation { get; set; }
-        public IQueryable<GooglePlaceModel.Result> GearRental { get; set; }
+        public IQueryable<GooglePlaceModel.Result> BikeShops { get; set; }
     }
 }

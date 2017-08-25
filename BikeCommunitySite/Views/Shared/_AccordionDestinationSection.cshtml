@@ -1,5 +1,5 @@
 ﻿@using BikeCommunitySite.Models;
-@model Sakura.AspNetCore.IPagedList<BikeCommunitySite.Models.DestinationModel.Place>
+@model IQueryable<BikeCommunitySite.Models.DestinationModel.Place>
 
 <script>
     function myFunctionCity() {
@@ -44,37 +44,34 @@
     }
 </script>
 
-@if (Model != null && Model.TotalPage > 0)
+@if (Model != null && Model.Count() > 0)
 {
-            <div class="row">
-                <input type="text" id="myInputCity" onkeyup="myFunctionCity()" placeholder="Search by City">
-                <input type="text" id="myInputState" onkeyup="myFunctionState()" placeholder="Search by State">
+    <div class="row">
+        <input type="text" id="myInputCity" onkeyup="myFunctionCity()" placeholder="Search by City">
+        <input type="text" id="myInputState" onkeyup="myFunctionState()" placeholder="Search by State">
 
-                <div class="col-lg-6">
-                    <table id="myTable">
-                        <tr class="header">
-                            <th style="width:10%"></th>
-                            <th style="width:50%;">Name</th>
-                            <th style="width:20%;">City</th>
-                            <th style="width:20%;">State</th>
-                        </tr>
-    @foreach (var place in Model)
-    {
-        @foreach (var act in place.activities)
-        {
-                        <tr>
-                            <td>
-                                <span class="input-group-addon">
-                                    <input type="checkbox" aria-label="...">
-                                </span>
-                            </td>
-                            <td>@place.name</td>
-                            <td>@place.city</td>
-                            <td>@place.state</td>
-                        </tr>
-        }
-    }
-                    </table>
-                </div>
-            </div>
+        <div class="col-lg-6">
+            <table id="myTable">
+                <tr class="header">
+                    <th style="width:10%"></th>
+                    <th style="width:50%;">Name</th>
+                    <th style="width:20%;">City</th>
+                    <th style="width:20%;">State</th>
+                </tr>
+                @foreach (var place in Model)
+                {
+                    <tr>
+                        <td>
+                            <span class="input-group-addon">
+                                <input type="checkbox" aria-label="...">
+                            </span>
+                        </td>
+                        <td>@place.name</td>
+                        <td>@place.city</td>
+                        <td>@place.state</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
 }
