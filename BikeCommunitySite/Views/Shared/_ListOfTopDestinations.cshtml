@@ -3,6 +3,10 @@
 
 @if (Model != null && Model.TotalPage > 0)
 {
+    <script>
+        var myDiv = $('#description');
+        myDiv.text(myDiv.text().substring(0, 200));
+    </script>
 
     @foreach (var place in Model)
     {
@@ -16,12 +20,20 @@
                             <strong>@act.rank</strong>
                         </div>
                         <div class="col-md-6">
-                            <img class="img-responsive img-border-left"
-                                 src="@act.thumbnail" alt="">
+                            @if (act.thumbnail!=null)
+                            {
+                                <img class="img-responsive img-border-left"
+                                     src="@act.thumbnail" alt="">
+                            }
+                            else
+                            {
+                                <img class="img-responsive img-border-left"
+                                     src="~/images/destinationsIcon.png" alt="">
+                            }
                         </div>
                         <div class="col-md-6">
                             <p>Description:</p>
-                            <p>@place.description</p>
+                            <p id="description">@place.description</p>
                             <p><a href="@Url.Action("DestinationDetails", "Place", new DestinationModel.Place { lat = place.lat, lon = place.lon, city = place.city })" class="btn btn-primary" role="button">Details</a></p>
                         </div>
                         <div class="clearfix"></div>

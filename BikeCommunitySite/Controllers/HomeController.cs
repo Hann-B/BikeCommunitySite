@@ -6,9 +6,6 @@ using BikeCommunitySite.Models;
 using BikeCommunitySite.Services;
 using Sakura.AspNetCore;
 using BikeCommunitySite.Models.ViewModels;
-using System.Net.Http;
-using System.Net;
-using System.Net.Http.Headers;
 
 namespace BikeCommunitySite.Controllers
 {
