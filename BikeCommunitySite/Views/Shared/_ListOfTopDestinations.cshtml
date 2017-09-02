@@ -27,13 +27,18 @@
                             }
                             else
                             {
-                                <img class="img-responsive img-border-left"
+                                <img style="width:50%;" img-responsive img-border-left"
                                      src="~/images/destinationsIcon.png" alt="">
                             }
                         </div>
                         <div class="col-md-6">
                             <p>Description:</p>
-                            <p id="description">@place.description</p>
+                            <p id="description" 
+                               style="white-space:nowrap; 
+                                      overflow:hidden;
+                                      text-overflow:ellipsis;
+                                      ">
+                            @place.description</p>
                             <p><a href="@Url.Action("DestinationDetails", "Place", new DestinationModel.Place { lat = place.lat, lon = place.lon, city = place.city })" class="btn btn-primary" role="button">Details</a></p>
                         </div>
                         <div class="clearfix"></div>
