@@ -26,9 +26,8 @@ namespace BikeCommunitySite.Controllers
         {
             //Destinations
             var listOfDestinations = await _placeService.GetTopDestinations();
-            IQueryable<DestinationModel.Place> desintations = null;
+            IQueryable<GooglePlaceModel.Result> desintations = null;
             desintations = listOfDestinations
-                .OrderBy(o => o.state)
                 .AsQueryable();
 
             //Accommodations
@@ -58,11 +57,9 @@ namespace BikeCommunitySite.Controllers
             int no = page ?? 1;
             int size = pageSize ?? 5;
             var listOfPlaces = await _placeService.GetTopDestinations();
-            IPagedList<DestinationModel.Place> lst = null;
+            IPagedList<GooglePlaceModel.Result> lst = null;
             lst = listOfPlaces
-                .OrderBy(o => o.description)
-                .Reverse()
-                .ToPagedList<DestinationModel.Place>(size, no);
+                .ToPagedList<GooglePlaceModel.Result>(size, no);
 
             return View(lst);
         }

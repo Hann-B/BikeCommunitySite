@@ -23,7 +23,7 @@ namespace BikeSite.Services
             _googleApis = googleOptionsAccessor.Value;
         }
 
-        public async Task<IQueryable<DestinationModel.Place>> GetTopDestinations()
+        public async Task<IQueryable<GooglePlaceModel.Result>> GetTopDestinations()
         {
             var singleTracksApi = _singleTracksApi;
 
@@ -39,9 +39,11 @@ namespace BikeSite.Services
                 raw = reader.ReadToEnd();
             }
             var allresults = JsonConvert.DeserializeObject<DestinationModel.RootObject>(raw);
-            //var filteredResults = allresults.places.RemoveAll(r => r.description.ToString() == string.Empty);
-            return allresults.places.AsQueryable();
 
+            var googlePlaces = new List<GooglePlaceModel.Result>();
+            googlePlaces = await TypeConversions.ToGooglePlaceFormat(allresults.places);
+
+            return googlePlaces.AsQueryable();
         }
 
         public async Task<string> GetCsvFormat()

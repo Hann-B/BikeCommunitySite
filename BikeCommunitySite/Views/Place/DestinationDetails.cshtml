@@ -1,4 +1,4 @@
-﻿@model BikeCommunitySite.Models.DestinationModel.Place
+﻿@model BikeCommunitySite.Models.GooglePlaceDetailModel.Result
 
 <!DOCTYPE html>
 <html>
@@ -26,7 +26,7 @@
                 <hr>
                 <h2 class="intro-text text-center">
                     @Model.name
-                    <strong>@Model.city, @Model.state</strong>
+                    <strong>@Model.adr_address, @Model.formatted_phone_number</strong>
                 </h2>
                 <hr>
 
@@ -35,7 +35,7 @@
                     var map;
 
         function initMap() {
-            var myLatLng = {lat: @Model.lat, lng: @Model.lon};
+            var myLatLng = {lat: @Model.geometry.location.lat, lng: @Model.geometry.location.lng};
 
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 13,
@@ -57,17 +57,16 @@
                         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgSD6hkVYX4myK7K7Od7UUMPA3i0ijS6E&callback=initMap">
                 </script>
 
+                <img src="@Model.icon" />
+
                 <hr class="visible-xs">
 
-                @foreach (var item in Model.activities)
-            {
-                    <p><a href="@item.url" target="_blank">Website</a></p>
-                    <p>Rating: @item.rating</p>
-                    <p>Length: @item.length</p>
+                    <p><a href="@Model.url" target="_blank">Website</a></p>
+                    <p>Rating: @Model.rating</p>
+                    <p>Length: @Model.types</p>
 
-                }
                 <p>Description:</p>
-                <p>@Model.description</p>
+                <p>@Model.reviews</p>
             </div>
             <div>
                 <a href="@Url.Action("Destinations", "Home")" class="btn btn-primary" role="button">Back to List</a>

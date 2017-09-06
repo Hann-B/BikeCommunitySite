@@ -65,6 +65,7 @@ namespace BikeCommunitySite.Models
             public List<Photo> photos { get; set; }
             public double? rating { get; set; }
             public OpeningHours opening_hours { get; set; }
+            public string description { get; set; }=string.Empty;
         }
 
         public class RootObject

@@ -8,7 +8,7 @@ namespace BikeCommunitySite.Services
 {
     public interface IPlaceService
     {
-        Task<IQueryable<DestinationModel.Place>> GetTopDestinations();
+        Task<IQueryable<GooglePlaceModel.Result>> GetTopDestinations();
         Task<DestinationModel.Place> GetPlaceDetailsAsync(double lat, double lon, string city);
         Task<GooglePlaceModel.RootObject> GetAccommodations();
         Task<GooglePlaceModel.RootObject> GetRentalStores();

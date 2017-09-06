@@ -6,6 +6,8 @@ using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace BikeCommunitySite.Services
@@ -64,6 +66,34 @@ namespace BikeCommunitySite.Services
                 }
             }
             return csvString.ToString();
+        }
+
+        public static async Task<List<GooglePlaceModel.Result>> ToGooglePlaceFormat(List<DestinationModel.Place> lst)
+        {
+            var rv = new List<GooglePlaceModel.Result>();
+            var textsearch = "https://maps.googleapis.com/maps/api/place/textsearch/json?query={0}&key=AIzaSyBgSD6hkVYX4myK7K7Od7UUMPA3i0ijS6E";
+            foreach (var place in lst)
+            {
+
+                var request = (HttpWebRequest)WebRequest.Create(string.Format(textsearch, place.name));
+
+                WebResponse response = await request.GetResponseAsync();
+
+                var raw = String.Empty;
+                using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8, true, 1024, true))
+                {
+                    raw = reader.ReadToEnd();
+                }
+                var result = JsonConvert.DeserializeObject<GooglePlaceModel.Result>(raw);
+                var p = new GooglePlaceModel.Result
+                {
+                    place_id = result.place_id,
+                    description=place.description.ToString()
+                };
+
+                rv.Add(p);
+            }
+            return rv;
         }
     }
 }
