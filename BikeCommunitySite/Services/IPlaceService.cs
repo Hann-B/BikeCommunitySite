@@ -13,7 +13,7 @@ namespace BikeCommunitySite.Services
         Task<GooglePlaceModel.RootObject> GetAccommodations();
         Task<GooglePlaceModel.RootObject> GetRentalStores();
         Task<GooglePlaceDetailModel.Result> GetGooglePlaceDetails(string placeId);
-
+        Task<GooglePlaceModel.RootObject> GetDestinations();
         Task<string> GetCsvFormat();
     }
 }

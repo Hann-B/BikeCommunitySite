@@ -60,9 +60,9 @@ namespace BikeCommunitySite.Controllers
         }
 
         [HttpGet("Place/Details")]
-        public async Task<ActionResult> PlaceDetails(string placeId)
+        public async Task<ActionResult> PlaceDetails(string place_id)
         {
-            var rv = await _placeService.GetGooglePlaceDetails(placeId);
+            var rv = await _placeService.GetGooglePlaceDetails(place_id);
             return View(rv);
         }
 

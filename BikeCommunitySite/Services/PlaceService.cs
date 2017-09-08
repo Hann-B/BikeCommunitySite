@@ -46,6 +46,24 @@ namespace BikeSite.Services
             return googlePlaces.AsQueryable();
         }
 
+        public async Task<GooglePlaceModel.RootObject> GetDestinations()
+        {
+            var textsearch = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=mountain+biking+trails+usa&key=AIzaSyBgSD6hkVYX4myK7K7Od7UUMPA3i0ijS6E";
+
+            var request = (HttpWebRequest)WebRequest.Create(textsearch);
+            request.Accept = "application/json";
+
+            WebResponse response = await request.GetResponseAsync();
+
+            var raw = String.Empty;
+            using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8, true, 1024, true))
+            {
+                raw = reader.ReadToEnd();
+            }
+            var destinations = JsonConvert.DeserializeObject<GooglePlaceModel.RootObject>(raw);
+            return destinations;
+        }
+
         public async Task<string> GetCsvFormat()
         {
             var singleTracksApi = _singleTracksApi;
@@ -124,11 +142,11 @@ namespace BikeSite.Services
             return ListOfRentalStores;
         }
 
-        public async Task<GooglePlaceDetailModel.Result> GetGooglePlaceDetails(string placeId)
+        public async Task<GooglePlaceDetailModel.Result> GetGooglePlaceDetails(string place_id)
         {
             var googleApis = _googleApis;
 
-            var PlaceDetails = string.Format(googleApis.PlaceDetails, placeId, googleApis.PlacesApiKey);
+            var PlaceDetails = string.Format(googleApis.PlaceDetails, place_id, googleApis.PlacesApiKey);
 
             var request = (HttpWebRequest)WebRequest.Create(PlaceDetails);
             request.Accept = "application/json";

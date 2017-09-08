@@ -13218,11 +13218,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\Hanna\\documents\\visual studio 2017\\Projects\\BikeCommunitySite\\BikeCommunitySite\\BikeCommunitySite.csproj",
+      "projectUniqueName": "C:\\Users\\Hanna\\Documents\\Visual Studio 2017\\Projects\\BikeCommunitySite\\BikeCommunitySite\\BikeCommunitySite.csproj",
       "projectName": "BikeCommunitySite",
-      "projectPath": "C:\\Users\\Hanna\\documents\\visual studio 2017\\Projects\\BikeCommunitySite\\BikeCommunitySite\\BikeCommunitySite.csproj",
+      "projectPath": "C:\\Users\\Hanna\\Documents\\Visual Studio 2017\\Projects\\BikeCommunitySite\\BikeCommunitySite\\BikeCommunitySite.csproj",
       "packagesPath": "C:\\Users\\Hanna\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Hanna\\documents\\visual studio 2017\\Projects\\BikeCommunitySite\\BikeCommunitySite\\obj\\",
+      "outputPath": "C:\\Users\\Hanna\\Documents\\Visual Studio 2017\\Projects\\BikeCommunitySite\\BikeCommunitySite\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

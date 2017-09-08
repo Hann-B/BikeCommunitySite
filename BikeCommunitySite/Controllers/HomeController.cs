@@ -56,9 +56,9 @@ namespace BikeCommunitySite.Controllers
         {
             int no = page ?? 1;
             int size = pageSize ?? 5;
-            var listOfPlaces = await _placeService.GetTopDestinations();
+            var listOfPlaces = await _placeService.GetDestinations();
             IPagedList<GooglePlaceModel.Result> lst = null;
-            lst = listOfPlaces
+            lst = listOfPlaces.results
                 .ToPagedList<GooglePlaceModel.Result>(size, no);
 
             return View(lst);
