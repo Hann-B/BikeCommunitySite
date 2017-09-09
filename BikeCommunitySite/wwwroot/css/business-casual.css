@@ -107,10 +107,10 @@ footer {
     background: rgba(255,255,255,0.9);
 }
 
-footer p {
-    margin: 0;
-    padding: 50px 0;
-}
+    footer p {
+        margin: 0;
+        padding: 50px 0;
+    }
 
 @media screen and (min-width:768px) {
     .brand {
@@ -166,11 +166,11 @@ footer p {
         background: rgba(255,255,255,0.9);
     }
 
-    .nav>li>a {
+    .nav > li > a {
         padding: 35px;
     }
 
-    .navbar-nav>li>a {
+    .navbar-nav > li > a {
         line-height: normal;
     }
 
@@ -183,10 +183,10 @@ footer p {
     }
 }
 
-@media screen and (min-width:1200px) {
+/*@media screen and (min-width:1200px) {
     .box:after {
         content: '';
         display: table;
         clear: both;
     }
-}
+}*/
